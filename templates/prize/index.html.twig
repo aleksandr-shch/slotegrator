@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block title %}Try your luck!{% endblock %}
+{% block body %}
+    <h1>Try to win prize</h1>
+    <form id="form_prize" action="">
+        <input type="hidden" name="user" value="{{ user.id }}">
+        <button type="submit">Try luck!</button>
+        <div id="message"></div>
+    </form>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/prize.js') }}"></script>
+{% endblock %}
