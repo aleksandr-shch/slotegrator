@@ -1,0 +1,44 @@
+parameters:
+    #example of consts of API URL there can be delivered request to write users money
+    app_get_user_send_url: 'https://pkgstore.datahub.io/core/nasdaq-listings/nasdaq-listed_json/data/a5bc7580d6176d60ac0b2142ca8d7df6/nasdaq-listed_json.json'
+    app_get_user_send_x_rapidapi_host: 'apidojo-yahoo-finance-v1.p.rapidapi.com'
+    app_get_user_send_x_rapidapi_key: 'fb57ba7133msh059275f48e54b35p10489djsnc7fed1ca6807'
+    ####################################################################
+    app_money_total_amount: 1000000
+    app_prizes: ['first', 'second', 'third', 'fourth', 'fifth']
+    app_coefficient: 0.1
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Form'
+            - '../src/Kernel.php'
+            - '../src/Repository'
+            - '../src/Service'
+            - '../src/Security'
+            - '../src/Tests/'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\Security\LoginFormAuthenticator:
+        class: App\Security\LoginFormAuthenticator
+
+    App\Service\UserService:
+        class: App\Service\UserService
+
+    App\Service\PrizeService:
+        class: App\Service\PrizeService
+
+    App\Repository\UserRepository:
+        arguments:
+            - 'App\Entity\User'
+        factory: ['@doctrine', 'getRepository']
